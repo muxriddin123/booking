@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      margin: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    select {
+      margin: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+<h2><p th:text="${event.name}" />Event Name</th:text></h2>
+<p><p th:text="${event.description}" />Event Description</th:text></p>
+
+<form th:action="@{/event/book}" method="post">
+  <input type="hidden" th:name="eventId" th:value="${event.id}">
+  <select name="date" id="date" >
+    <div th:each="d : ${event.days}">
+      <option th:value="${d}" th:text="${d}"></option>
+    </div>
+  </select>
+  <select name="time" id="time" >
+    <div th:each="t : ${event.times}">
+      <option th:value="${t}" th:text="${t}"></option>
+    </div>
+  </select>
+  <button type="submit">Book Now</button>
+</form>
+</body>
+</html>

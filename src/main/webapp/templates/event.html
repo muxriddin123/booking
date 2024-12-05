@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      margin: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    select {
+      margin: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <table>
+    <tr>
+      <th>name</th>
+      <th>description</th>
+      <th>dates</th>
+      <th>time</th>
+      <th>capacity</th>
+      <th>register</th>
+    </tr>
+    <tr th:each="e :${events}">
+      <th th:text="${e.name}" ></th>
+      <th th:text="${e.description}" ></th>
+      <th th:text="${e.startDate} + '-' + ${e.endDate}" ></th>
+      <th th:text="${e.startTime} + '-' + ${e.endTime}" ></th>
+      <th th:text="${e.capacity}" ></th>
+      <th ><a th:href="@{/event/{id}(id=${e.id})}">register</a></th>
+    </tr>
+  </table>
+</div>
+<div>
+  <form action="/event" method="post">
+    <input type="text" name="name" placeholder="enter name">
+    <input type="text" name="description" placeholder="enter description">
+    <label for="startDate">choose start date</label>
+    <select name="startDate" id="startDate" >
+      <div th:each="d : ${days}">
+        <option th:value="${d}" th:text="${d}"></option>
+      </div>
+    </select>
+
+    <label for="endDate">choose end date</label>
+    <select name="endDate" id="endDate" >
+      <div th:each="d : ${days}">
+        <option th:value="${d}" th:text="${d}"></option>
+      </div>
+    </select>
+<!--    <input type="text" name="startDate" placeholder="enter startDate">-->
+<!--    <input type="text" name="endDate" placeholder="enter endDate">-->
+    <input type="number" name="startTime" placeholder="enter startTime">
+    <input type="number" name="endTime" placeholder="enter endTime">
+    <input type="number" name="capacity" placeholder="enter capacity">
+    <button type="submit">submit</button>
+  </form>
+</div>
+</body>
+</html>
